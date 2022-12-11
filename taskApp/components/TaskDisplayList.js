@@ -7,26 +7,38 @@ import { TaskListItem } from "./TaskListItem.js"
 * @property {string}todo
 * @property {boolean}completed
 */
-export class TaskList {
+export class TaskDisplayList {
   /* @type Task[] */
   #tasks = []
+  /* @type HTMLUListElement */
+  #element
   
   /**
    * 
+   * @param {HTMLUListElement}
    * @param {Task[]} tasks 
    */
-  constructor(tasks) {
-    this.#tasks =  tasks
+  constructor(element, tasks) {
+    this.#tasks = tasks
+    this.#element = element
   }
 
   /**
    * 
    * @param {HTMLULElement} element 
    */
-  displayInto(element) {
+  display(element) {
     for (const task of this.#tasks) {
       const taskItem = new TaskListItem(task)
-      element.append(taskItem.element)
+      this.#element.append(taskItem.element)
     }
+  }
+
+  /**
+   * 
+   * @param {TaskListItem} taskListItem 
+   */
+  addTask(taskListItem) {
+    this.#element.prepend(taskListItem.element)
   }
 }
