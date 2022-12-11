@@ -1,6 +1,6 @@
 import { createElement } from "./helpers/domUtils.js";
 import { fetchJSON } from "./helpers/fetchUtils.js";
-import { TaskList } from "./taskApp/Components/TaskList.js";
+import { TaskList } from "../taskApp/components/TaskList.js";
 
 try {
   const data = await fetchJSON('https://dummyjson.com/todos?skip=0&limit=20')
