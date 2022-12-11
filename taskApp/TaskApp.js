@@ -65,7 +65,8 @@ export class TaskApp {
       const data = await fetchJSON('https://dummyjson.com/todos?skip=0&limit=20')
       const tasks = data.todos 
       this.#taskListElement = document.getElementById('tasks');
-      
+      this.#taskList = new TaskDisplayList(this.#taskListElement, tasks)
+      this.#taskList.display()
     } catch (err) {
       const notificationError = createElement('div', 'Chargement des tâches impossible !', {
         class: 'notification notification--danger',
