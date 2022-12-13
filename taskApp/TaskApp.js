@@ -9,6 +9,9 @@ export class TaskApp {
   #element
   #taskListElement
   #taskList
+  #isEditing = false
+  #editTask
+  #taskForm
 
 
   /**
@@ -31,6 +34,7 @@ export class TaskApp {
     `
 
     this.#taskListElement = app.querySelector('#tasks')
+    this.#taskForm = app.querySelector('form')  
     this.#element.append(app)
 
     this._init()
@@ -43,13 +47,18 @@ export class TaskApp {
    */
   _submitHandler(evt) {
     evt.preventDefault()
-    const form = evt.currentTarget
-    const title = new FormData(form).get('title').toString().trim()
+    const title = new FormData(this.#taskForm).get('title').toString().trim()
     if (title === '') {
       return
     }
-    this.createTask(title, false)
-    form.reset()
+    if (!this.#isEditing) {
+      this.createTask(title, false)
+    } else {
+      this.#editTask.title = title
+      this.#isEditing = false
+      this.#editTask = null;
+    }
+    this.#taskForm.reset()
   }
 
   _removeTask(task) {
@@ -68,6 +77,14 @@ export class TaskApp {
     this.#taskList.refresh()
   }
 
+  _editTask(task) {
+    console.log('edit  : ', task)
+    const input = this.#taskForm.querySelector('[name="title"]')
+    input.value = task.title
+    this.#editTask = task
+    this.#isEditing = true;
+  }
+
 
   async _init() {
     try {
@@ -76,7 +93,7 @@ export class TaskApp {
       this.#taskListElement = document.getElementById('tasks');
       this.#taskList = new TaskDisplayList(this.#taskListElement)
       for (const task of tasks) {
-        const taskItem = new TaskListItem(task, this._removeTask)
+        const taskItem = new TaskListItem(task, this._removeTask, this._editTask.bind(this))
         this.#taskList.addTask(taskItem)
       }
       this.#taskList.display()
