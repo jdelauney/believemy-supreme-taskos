@@ -65,6 +65,7 @@ export class TaskApp {
     }
     const taskItem = new TaskListItem(task, this._removeTask)
     this.#taskList.addTask(taskItem)
+    this.#taskList.refresh()
   }
 
 

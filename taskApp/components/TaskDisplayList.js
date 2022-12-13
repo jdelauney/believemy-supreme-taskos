@@ -37,6 +37,10 @@ export class TaskDisplayList {
     }
   }
 
+  refresh() {
+    this.display()
+  }
+
   /**
    * 
    * @param {TaskListItem} taskListItem 
