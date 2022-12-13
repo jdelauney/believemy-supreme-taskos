@@ -153,6 +153,64 @@ h1 {
   border: var(--neutral-color-variation-3) 1px solid;
 }
 
+.task-app__task > label {
+flex-grow: 1;
+display: flex;
+align-items: center;
+padding: .8rem;
+font-size: .7em;
+cursor: pointer;
+} 
+
+.task-app__task__checkbox {
+display: flex;
+align-items: center;
+justify-content: center;
+width: 1.4em;
+height: 1.4em;
+padding: .2rem;
+border: var(--neutral-color-variation-1) 2px solid;
+border-radius: 50%;
+margin-right: 1rem;
+} 
+
+.task-app__task__checkbox:focus-within {
+border: var(--primary-color-variation-2) 2px solid;
+} 
+
+.task-app__task__checkbox > input {
+  appearance: none; /* Important pour firefox !!!!*/
+  visibility: hidden;
+font-size: 0;
+color: transparent;
+ text-shadow: none;
+background-color: transparent;
+border: 0;
+outline: 0;
+clip: rect(0 0 0 0);
+overflow: hidden;
+opacity: 0;
+inset: 0;
+width: 0;
+height: 0;
+} 
+
+.task-app__task__checkbox > input + svg {
+visibility: hidden;
+opacity: 0;
+color:var(--primary-color);
+transition: all .25s ease;
+}
+
+.task-app__task__checkbox > input:checked + svg {
+visibility: visible;
+opacity: 1;
+}
+
+.task-app__task__checkbox:has(input:checked) + span {
+text-decoration:line-through;
+}
+
 .notification {
   position: absolute;
   width: 95%;
