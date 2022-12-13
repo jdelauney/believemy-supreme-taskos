@@ -18,8 +18,7 @@ export class TaskDisplayList {
    * @param {HTMLUListElement}
    * @param {Task[]} tasks 
    */
-  constructor(element, tasks) {
-    this.#tasks = tasks
+  constructor(element) {    
     this.#element = element
   }
 
@@ -27,10 +26,14 @@ export class TaskDisplayList {
    * 
    * @param {HTMLULElement} element 
    */
-  display(element) {
-    for (const task of this.#tasks) {
-      const taskItem = new TaskListItem(task)
-      this.#element.append(taskItem.element)
+  display() {
+    this.#element.innerHTML = ''
+    if (this.#tasks.length > 0) {
+      for (const task of this.#tasks) { 
+        this.#element.prepend(task.element)
+      }
+    } else {
+      this.#element.innerText = "Aucune tâche !"
     }
   }
 
@@ -39,6 +42,6 @@ export class TaskDisplayList {
    * @param {TaskListItem} taskListItem 
    */
   addTask(taskListItem) {
-    this.#element.prepend(taskListItem.element)
+    this.#tasks.push(taskListItem)
   }
 }
