@@ -272,6 +272,10 @@ transition: all .25s ease;
  transform: scale(1);
 }
 
+.icon--primary {
+ color: var(--primary-color-variation-1);
+}
+
 .icon--danger {
  color: var(--danger-color);
 }
