@@ -48,24 +48,37 @@ export class TaskApp {
     if (title === '') {
       return
     }
+    this.createTask(title, false)
+    form.reset()
+  }
 
+  _removeTask(task) {
+    console.log('remove : ', task)
+  }
+
+  createTask(title, isCompleted) {
     const task = {
       id: Date.now(),
       todo: title,
-      completed: false
-    }
+      completed : isCompleted
 
-    const newTaskListItem = new TaskListItem(task)
-    this.#taskList.addTask(newTaskListItem)
-    form.reset()
+    }
+    const taskItem = new TaskListItem(task, this._removeTask)
+    this.#taskList.addTask(taskItem)
+    this.#taskList.refresh()
   }
+
 
   async _init() {
     try {
       const data = await fetchJSON('https://dummyjson.com/todos?skip=0&limit=20')
       const tasks = data.todos 
       this.#taskListElement = document.getElementById('tasks');
-      this.#taskList = new TaskDisplayList(this.#taskListElement, tasks)
+      this.#taskList = new TaskDisplayList(this.#taskListElement)
+      for (const task of tasks) {
+        const taskItem = new TaskListItem(task, this._removeTask)
+        this.#taskList.addTask(taskItem)
+      }
       this.#taskList.display()
     } catch (err) {
       const notificationError = createElement('div', 'Chargement des tâches impossible !', {
