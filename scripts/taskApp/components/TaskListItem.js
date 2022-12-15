@@ -30,8 +30,27 @@ export class TaskListItem {
       </span>
       <span>${task.todo}</span>
     `
+    const dropdown = createElement('div', '', { class: "task-app__task__menu" })
+    dropdown.innerHTML = `
+      <button class="btn btn--task-menu">
+        <svg class="icon-svg">
+          <use href="#icon-ellipsis"/>
+        </svg>
+      </button>
+      <ul class="task-app__task__menu__actions">
+        <li>
+          <button data-task-remove class="btn btn--dropdow-action">
+            <svg class="icon-svg icon--danger">
+              <use href="#icon-trash"/>
+            </svg>
+            Supprimer
+          </button>
+        </li>
+      </ul>
+    `
 
     li.append(label)
+    li.append(dropdown)
     this.#element = li
   }
 
