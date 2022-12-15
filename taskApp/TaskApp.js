@@ -1,6 +1,6 @@
 
-import { createElement } from "../helpers/domUtils.js";
-import { fetchJSON } from "../helpers/fetchUtils.js";
+import { createElement } from "../scripts/helpers/domUtils.js";
+import { fetchJSON } from "../scripts/helpers/fetchUtils.js";
 import { TaskDisplayList } from "./components/TaskDisplayList.js";
 import { TaskListItem } from "./components/TaskListItem.js";
 
@@ -9,6 +9,7 @@ export class TaskApp {
   #element
   #taskListElement
   #taskList
+
 
   /**
    * 
@@ -47,25 +48,32 @@ export class TaskApp {
     if (title === '') {
       return
     }
-    const task = {
-      id: Date.now(),
-      todo: title,
-      completed: false
-    }
-    const newTaskListItem = new TaskListItem(task)
-    this.#taskList.addTask(newTaskListItem)
+    this.createTask(title, false)
     form.reset()
   }
 
-  _removeTask(taskItem) {
-    taskItem.remove();    
+  _removeTask(task) {
+    console.log('remove : ', task)
   }
+
+  createTask(title, isCompleted) {
+    const task = {
+      id: Date.now(),
+      todo: title,
+      completed : isCompleted
+
+    }
+    const taskItem = new TaskListItem(task, this._removeTask)
+    this.#taskList.addTask(taskItem)
+    this.#taskList.refresh()
+  }
+
 
   async _init() {
     try {
       const data = await fetchJSON('https://dummyjson.com/todos?skip=0&limit=20')
       const tasks = data.todos 
-      console.log(tasks)
+      this.#taskListElement = document.getElementById('tasks');
       this.#taskList = new TaskDisplayList(this.#taskListElement)
       for (const task of tasks) {
         const taskItem = new TaskListItem(task, this._removeTask)
