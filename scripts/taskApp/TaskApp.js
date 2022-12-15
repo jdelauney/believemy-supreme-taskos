@@ -57,15 +57,20 @@ export class TaskApp {
     form.reset()
   }
 
-
-
+  _removeTask(taskItem) {
+    taskItem.remove();    
+  }
 
   async _init() {
     try {
       const data = await fetchJSON('https://dummyjson.com/todos?skip=0&limit=20')
       const tasks = data.todos 
       console.log(tasks)
-      this.#taskList = new TaskDisplayList(this.#taskListElement, tasks)
+      this.#taskList = new TaskDisplayList(this.#taskListElement)
+      for (const task of tasks) {
+        const taskItem = new TaskListItem(task, this._removeTask)
+        this.#taskList.addTask(taskItem)
+      }
       this.#taskList.display()
     } catch (err) {
       const notificationError = createElement('div', 'Chargement des tâches impossible !', {

@@ -211,6 +211,68 @@ h1 {
   text-decoration: line-through;
 }
 
+.task-app__task__menu {
+ height: 100%;
+ position: relative;
+}
+
+.task-app__task__menu__actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--neutral-color);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform-origin: top right;
+  transform: scale(0);
+  transition: all .35s ease-in;
+  box-shadow: 2px 2px 4px rgb(0 0 0 / 35% );
+}
+
+.task-app__task__menu__actions li {
+  display:flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .8rem;
+  background-color:transparent;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+
+.btn--dropdow-action {
+  padding: .8rem;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.btn--dropdown-action  svg:first-child {
+  margin-right: .8rem;
+}
+
+.btn--dropdown-action:hover {
+  background-color: (var--neutral-color-variation-1)
+}
+
+.btn--task-menu {
+  height: 100%;
+  border-radius: 0;
+  border: none;
+}
+
+.task-app__task__menu:hover .task-app__task__menu__actions {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+}
+
+.icon--danger {
+  color: var(--danger-color);
+}
+
 .notification {
   position: absolute;
   width: 95%;
