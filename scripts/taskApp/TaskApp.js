@@ -9,6 +9,9 @@ export class TaskApp {
   #element
   #taskListElement
   #taskList
+  #isEditing = false
+  #editTask
+  #taskForm
 
   /**
    * 
@@ -30,6 +33,7 @@ export class TaskApp {
     `
 
     this.#taskListElement = app.querySelector('#tasks')
+    this.#taskForm = app.querySelector('form')
     this.#element.append(app)
 
     this._init()
@@ -48,7 +52,7 @@ export class TaskApp {
       completed: isCompleted
     }
 
-    const newTaskItem = new TaskListItem(task, this._removeTask.bind(this))
+    const newTaskItem = new TaskListItem(task, this._removeTask.bind(this),  this._editTask.bind(this))
     this.#taskList.addTask(newTaskItem)
     this.#taskList.refresh()
   }
@@ -59,19 +63,34 @@ export class TaskApp {
    */
   _submitHandler(evt) {
     evt.preventDefault()
-    const form = evt.currentTarget
-    const title = new FormData(form).get('title').toString().trim()
+   
+    const title = new FormData(this.#taskForm).get('title').toString().trim()
     if (title === '') {
       return
     }
-    this._createTask(title, false) 
-    form.reset()
+
+    if (!this.#isEditing) {
+      this._createTask(title, false) 
+    } else {
+      this.#editTask.title = title
+      this.#isEditing = false
+      this.#editTask = null
+    }
+    
+    this.#taskForm.reset()
   }
 
   _removeTask(taskItem) {
     taskItem.remove();     
     this.#taskList.removeTask(taskItem.id)
     this.#taskList.refresh();
+  }
+
+  _editTask(taskItem) {
+    const input = this.#taskForm.querySelector('[name="title"]')
+    input.value = taskItem.title
+    this.#editTask = taskItem
+    this.#isEditing = true
   }
 
   async _init() {
@@ -81,7 +100,7 @@ export class TaskApp {
       console.log(tasks)
       this.#taskList = new TaskDisplayList(this.#taskListElement)
       for (const task of tasks) {
-        const taskItem = new TaskListItem(task, this._removeTask.bind(this))
+        const taskItem = new TaskListItem(task, this._removeTask.bind(this),  this._editTask.bind(this))
         this.#taskList.addTask(taskItem)
       }
       this.#taskList.display()
