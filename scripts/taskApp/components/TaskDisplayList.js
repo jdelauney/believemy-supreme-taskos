@@ -33,15 +33,24 @@ export class TaskDisplayList {
       }
     } else {
       this.#element.innerText = "Aucune tâche !"
-    }
-    
+    }    
+  }
+
+  refresh() {
+    this.display()
   }
 
   /**
    * 
    * @param {TaskListItem} taskListItem 
    */
-  addTask(taskListItem) {    
+  addTask(taskListItem) {
     this.#tasks.push(taskListItem);
+  }
+
+  removeTask(id) {
+    this.#tasks = this.#tasks.filter((task) => {
+      return task.id !== id
+    })
   }
 }
