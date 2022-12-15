@@ -1,3 +1,4 @@
+/* stylelint-disable custom-property-empty-line-before */
 *, *::before, *::after {
   box-sizing: inherit;
   margin: 0;
@@ -18,7 +19,7 @@ ul {
   --neutral-color-variation-2: #50577A;
   --neutral-color-variation-3: #9aa1bd;
 
-  --primary-color: #caf5d6;
+  --primary-color: #caf5d6;  
   --primary-color-variation-1: #a2d5be;
   --primary-color-variation-2: #81b0a3;
   --primary-color-variation-3: #63867a;
@@ -46,6 +47,7 @@ body {
   background-color: var(--neutral-color);
   background-image: linear-gradient(135deg, var(--neutral-color) 0%, var(--neutral-color-variation-1) 100%);
   overflow: hidden;
+  
   /* color: var(--txt-color-light); */
 }
 
@@ -79,7 +81,6 @@ body {
   border-radius: 0 .5rem .5rem 0;
 }
 
-
 h1 {
   font-size: 1.6em;
   text-align: center;
@@ -110,8 +111,8 @@ h1 {
   height: 100%;
   background-color: var(--neutral-color);
   border-radius: .5rem;
-  border: var (--neutral-color-variation-3) 1px solid;
-  box-shadow: 2px 6px 8px 3px rgb(0 0 0 /.35);
+  border: var(--neutral-color-variation-3) 1px solid;
+  box-shadow: 2px 6px 8px 3px rgb(0 0 0 / 35%);
 }
 
 .task-app__new-task {
@@ -126,14 +127,13 @@ h1 {
 
 .task-app__new-task input {
   flex: 1 1 auto;
-  width:1%;
+  width: 1%;
   padding: .8rem 1rem;
   border-radius: 1em 0 0 1em;
   outline: 0;
   border: var(--neutral-color) 1px solid;
   background-color: var(--neutral-color-variation-3);
   font-size: 1em;
-
 }
 
 .task-app__tasks {
@@ -154,127 +154,125 @@ h1 {
 }
 
 .task-app__task > label {
-flex-grow: 1;
-display: flex;
-align-items: center;
-padding: .8rem;
-font-size: .7em;
-cursor: pointer;
-} 
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  padding: .8rem;
+  font-size: .7em;
+  cursor: pointer;
+}
 
 .task-app__task__checkbox {
-display: flex;
-align-items: center;
-justify-content: center;
-width: 1.4em;
-height: 1.4em;
-padding: .2rem;
-border: var(--neutral-color-variation-1) 2px solid;
-border-radius: 50%;
-margin-right: 1rem;
-} 
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.4em;
+  height: 1.4em;
+  padding:.2rem;
+  border: var(--neutral-color-variation-1) 2px solid;
+  border-radius: 50%;
+  margin-right: 1rem;
+}
 
 .task-app__task__checkbox:focus-within {
-border: var(--primary-color-variation-2) 2px solid;
-} 
+  border: var(--primary-color-variation-2) 2px solid;
+}
 
 .task-app__task__checkbox > input {
-  appearance: none; /* Important pour firefox !!!!*/
+  appearance: none;
   visibility: hidden;
-font-size: 0;
-color: transparent;
- text-shadow: none;
-background-color: transparent;
-border: 0;
-outline: 0;
-clip: rect(0 0 0 0);
-overflow: hidden;
-opacity: 0;
-inset: 0;
-width: 0;
-height: 0;
-} 
+  font-size: 0;
+  color: transparent;
+  text-shadow: none;
+  background-color: transparent;
+  border: 0;
+  outline: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+  opacity: 0;
+  inset: 0;
+  width: 0;
+  height: 0;
+}
 
 .task-app__task__checkbox > input + svg {
-visibility: hidden;
-opacity: 0;
-color:var(--primary-color);
-transition: all .25s ease;
+  visibility: hidden;
+  opacity: 0;
+  color: var (--primary-color);
+  transition: all .25s ease;
 }
 
 .task-app__task__checkbox > input:checked + svg {
-visibility: visible;
-opacity: 1;
+  visibility: visible;
+  opacity: 1;  
 }
 
 .task-app__task__checkbox:has(input:checked) + span {
-text-decoration:line-through;
+  text-decoration: line-through;
 }
 
-
 .task-app__task__menu {
-height:100%;
-position:relative;
+ height: 100%;
+ position: relative;
 }
 
 .task-app__task__menu__actions {
-position: absolute;
-top:0;
-right: 0;
-background-color: var(--neutral-color);
-list-style-type: none;
-z-index: 999;
-opacity:0;
-visibility: hidden;
-transform-origin: top right;
-transform: scale(0);
-transition: all .35s ease-in;
-box-shadow: 2px 2px 4px rgb(0 0 0 /.35);
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: var(--neutral-color);
+  z-index: 999;
+  opacity: 0;
+  visibility: hidden;
+  transform-origin: top right;
+  transform: scale(0);
+  transition: all .35s ease-in;
+  box-shadow: 2px 2px 4px rgb(0 0 0 / 35% );
 }
-  
+
 .task-app__task__menu__actions li {
-display: flex;
-align-items: center;
-gap:1rem;
-padding:.8rem;
-background-color: transparent;
-cursor: pointer;
-transition: all .25s ease;
+  display:flex;
+  align-items: center;
+  gap: 1rem;
+  padding: .8rem;
+  background-color:transparent;
+  cursor: pointer;
+  transition: all .25s ease;
 }
 
-
-.btn--dropdown-action {
-  padding:.8rem;
+.btn--dropdow-action {
+  padding: .8rem;
   justify-content: flex-start;
   width: 100%;
   height: 100%;
-  border:none;
+  border: none;
   border-radius: 0;
 }
 
-.btn--dropdown-action svg:first-child{
+.btn--dropdown-action  svg:first-child {
   margin-right: .8rem;
 }
 
 .btn--dropdown-action:hover {
- background-color: var(--neutral-color-variation-1);
+  background-color: (var--neutral-color-variation-1)
 }
 
 .btn--task-menu {
- height: 100%;
- border-radius: 0;
- border:none;
+  height: 100%;
+  border-radius: 0;
+  border: none;
 }
 
 .task-app__task__menu:hover .task-app__task__menu__actions {
- visibility: visible;
- opacity:1;
- transform: scale(1);
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
 }
 
 .icon--danger {
- color: var(--danger-color);
+  color: var(--danger-color);
 }
+
 .notification {
   position: absolute;
   width: 95%;
