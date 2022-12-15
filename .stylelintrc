@@ -1,4 +1,12 @@
 {
   "defaultSeverity": "warning",
-  "extends": ["stylelint-config-standard"]
+  "extends": ["stylelint-config-standard", "stylelint-config-prettier"],
+  "rules": {
+    "color-function-notation": ["modern", { "disableFix": true }],
+    "number-leading-zero": "never",
+    "selector-class-pattern": "^[a-z]([-]?[a-z0-9]+)*(__[a-z0-9]([-]?[a-z0-9]+)*)?(--[a-z0-9]([-]?[a-z0-9]+)*)?(:[a-z]+)?$",
+    "property-no-vendor-prefix": null,
+    "property-no-unknown": null,
+    "custom-property-empty-line-before": ["never", { "except": ["after-custom-property"] }]
+  }
 }

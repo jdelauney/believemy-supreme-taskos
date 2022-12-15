@@ -49,7 +49,7 @@ export class TaskApp {
     }
     const task = {
       id: Date.now(),
-      todo: title,      
+      todo: title,
       completed: false
     }
     const newTaskListItem = new TaskListItem(task)
