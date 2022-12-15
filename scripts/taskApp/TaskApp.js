@@ -38,6 +38,23 @@ export class TaskApp {
 
   /**
    * 
+   * @param {string} title 
+   * @param {boolean} isCompleted 
+   */
+  _createTask(title, isCompleted) {
+    const task = {
+      id: Date.now(),
+      todo: title,
+      completed: isCompleted
+    }
+
+    const newTaskItem = new TaskListItem(task, this._removeTask.bind(this))
+    this.#taskList.addTask(newTaskItem)
+    this.#taskList.refresh()
+  }
+
+  /**
+   * 
    * @param {SubmitEvent} evt 
    */
   _submitHandler(evt) {
@@ -47,18 +64,14 @@ export class TaskApp {
     if (title === '') {
       return
     }
-    const task = {
-      id: Date.now(),
-      todo: title,
-      completed: false
-    }
-    const newTaskListItem = new TaskListItem(task)
-    this.#taskList.addTask(newTaskListItem)
+    this._createTask(title, false) 
     form.reset()
   }
 
   _removeTask(taskItem) {
-    taskItem.remove();    
+    taskItem.remove();     
+    this.#taskList.removeTask(taskItem.id)
+    this.#taskList.refresh();
   }
 
   async _init() {
@@ -68,7 +81,7 @@ export class TaskApp {
       console.log(tasks)
       this.#taskList = new TaskDisplayList(this.#taskListElement)
       for (const task of tasks) {
-        const taskItem = new TaskListItem(task, this._removeTask)
+        const taskItem = new TaskListItem(task, this._removeTask.bind(this))
         this.#taskList.addTask(taskItem)
       }
       this.#taskList.display()

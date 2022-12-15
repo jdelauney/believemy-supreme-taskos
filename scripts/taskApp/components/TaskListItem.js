@@ -21,7 +21,11 @@ export class TaskListItem {
    */
   constructor(task, removeCallback) {
     this.#removeCallback = removeCallback
-    
+    this._task = {
+      id: task.id,
+      title: task.todo,
+      completed: task.completed
+    }
     const id = 'task-' + task.id.toString()
     const isChecked = task.completed ? 'checked' : ''
     const li = createElement('li', '', { class: 'task-app__task' })
@@ -79,6 +83,10 @@ export class TaskListItem {
 
   get element() {
     return this.#element
+  }
+
+  get id() {
+    return this._task.id
   }
 
 }
