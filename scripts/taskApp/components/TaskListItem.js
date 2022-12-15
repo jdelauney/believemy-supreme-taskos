@@ -10,7 +10,9 @@ import { createElement } from "../../helpers/domUtils.js"
 export class TaskListItem {
   /* @type {HTMLElement} */
   #element
+  #taskTitleElement
   #removeCallback
+  #editCallback
   /* @type Task */
   _task
 
@@ -18,9 +20,12 @@ export class TaskListItem {
    * 
    * @param {Task} task
    * @param {function(TaskListItem):void} removeCallback
+   * @param {function(TaskListItem):void} editCallback
    */
-  constructor(task, removeCallback) {
+  constructor(task, removeCallback, editCallback) {
     this.#removeCallback = removeCallback
+    this.#editCallback = editCallback
+
     this._task = {
       id: task.id,
       title: task.todo,
@@ -39,6 +44,8 @@ export class TaskListItem {
       </span>
       <span>${task.todo}</span>
     `
+
+    this.#taskTitleElement = label.querySelector('span:last-child')
     const dropdown = createElement('div', '', { class: "task-app__task__menu" })
     dropdown.innerHTML = `
       <button class="btn btn--task-menu">
@@ -48,7 +55,15 @@ export class TaskListItem {
       </button>
       <ul class="task-app__task__menu__actions">
         <li>
-          <button data-task-remove class="btn btn--dropdow-action">
+          <button data-task-edit class="btn btn--dropdown-action">
+            <svg class="icon-svg icon--primary">
+              <use href="#icon-edit"/>
+            </svg>
+            Editer
+          </button>
+        </li>
+        <li>
+          <button data-task-remove class="btn btn--dropdown-action">
             <svg class="icon-svg icon--danger">
               <use href="#icon-trash"/>
             </svg>
@@ -61,6 +76,10 @@ export class TaskListItem {
     dropdown
       .querySelector('[data-task-remove]')
       .addEventListener("click", evt => this._removeHandler(evt))
+    
+    dropdown
+      .querySelector('[data-task-edit]')
+      .addEventListener("click", evt => this._editHandler(evt))
 
     li.append(label)
     li.append(dropdown)
@@ -77,6 +96,12 @@ export class TaskListItem {
     }
   }
 
+  _editHandler(evt) {
+    if (this.#editCallback) {
+      this.#editCallback(this)
+    }
+  }
+
   remove() {
     this.#element.remove()
   }
@@ -87,6 +112,15 @@ export class TaskListItem {
 
   get id() {
     return this._task.id
+  }
+
+  get title() {
+    return this._task.title
+  }
+
+  set title(value) {
+    this._task.title = value
+    this.#taskTitleElement.innerText = value
   }
 
 }
