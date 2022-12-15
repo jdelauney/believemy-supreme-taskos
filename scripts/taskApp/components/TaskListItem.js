@@ -15,14 +15,22 @@ export class TaskListItem {
   /**
    * 
    * @param {Task} task
-   * @param {function(TaskListItem):void} removeCallback
-   * @param {function(TaskListItem):void} editCallback
    */
   constructor(task) {
+    const id ='task-' + task.id.toString()
     const li = createElement('li', '', { class: 'task-app__task' })
-    const span = createElement('span', task.todo)
-    
-    li.append(span)  
+    const label = createElement('label', { for: id })
+    label.innerHTML = `
+      <span class="task-app__task__checkbox">
+        <input type="checkbox"  id ="${id}"/>
+        <svg class="icon-svg">
+          <use href="#icon-check"/>
+        </svg>
+      </span>
+      <span>${task.todo}</span>
+    `
+
+    li.append(label)
     this.#element = li
   }
 
